@@ -1,0 +1,2631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>FGT CLI Command Reference</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+
+ <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+header h1 {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+}
+
+.main-header {
+  background: #2d3e50;
+  padding: 40px 20px 30px;
+  text-align: center;
+  border-bottom: 1px solid #1a1a1a;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.main-title {
+  font-family: 'Inter', 'Segoe UI', 'Poppins', sans-serif;
+  font-size: 2.6rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0;
+  letter-spacing: -0.5px;
+}
+   body { background: #f4f6f8; color: #222; font-family: Roboto, sans-serif; margin: 0; }
+    header { background: #2d3e50; color: #fff; padding: 24px 10px 16px 10px; text-align: center; }
+   .top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 12px 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+   .search-input {
+  flex: 1;
+  max-width: 500px;
+  padding: 10px 14px;
+  font-size: 1.05em;
+  border-radius: 6px;
+  border: 1px solid #bbb;
+  min-width: 280px;
+}
+.top-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+    
+.toggle-btn { padding: 7px 16px; border-radius: 4px; border: none; background: #1976d2; color: #fff; cursor: pointer; }
+   .quick-jump {
+  font-family: 'Inter', 'Segoe UI', 'Roboto', Arial, sans-serif;
+  font-size: 1.05em;
+  padding: 10px 14px;
+  border-radius: 6px;
+  border: 1px solid #bbb;
+  background-color: #fff;
+  color: #222;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+.tool-podium {
+  background: #ffffff;
+  padding: 24px 20px;
+  margin: 30px auto 20px;
+  max-width: 1000px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.tool-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.search-input,
+.quick-jump,
+.toggle-btn {
+  font-size: 1.05em;
+  padding: 10px 14px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.search-input {
+  flex: 1;
+  min-width: 280px;
+  max-width: 500px;
+}
+
+.quick-jump {
+  font-family: 'Inter', sans-serif;
+  background-color: #fff;
+  color: #222;
+}
+
+.toggle-btn {
+  background-color: #1976d2;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  white-space: nowrap;
+}
+
+.toggle-btn:hover {
+  background-color: #145ea8;
+}
+body.dark .tool-podium {
+  background: #2b2b2b;
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.05);
+}
+
+body.dark .quick-jump,
+body.dark .search-input {
+  background-color: #1f1f1f;
+  color: #e5e5e5;
+  border: 1px solid #444;
+}
+    section { max-width: 900px; margin: 24px auto 32px auto; background: #f9f9fa; padding: 24px; border-radius: 8px; }
+    .section-header { font-size: 1.2em; font-weight: bold; margin-top: 32px; margin-bottom: 10px; color: #1a4b7a; border-bottom: 1px solid #e0e0e0; padding-bottom: 4px; cursor: pointer; }
+    .section-content { margin-bottom: 20px; display: none; }
+    .command-block { margin-bottom: 18px; }
+    .command-row { display: flex; align-items: center; gap: 10px; }
+    .command { font-weight: bold; font-size: 1.08em; color: #2d3e50; font-family: 'Fira Mono', monospace; background: #ffe082; padding: 2px 7px; border-radius: 4px; margin-right: 4px; display: inline-block; }
+    .description { margin-top: 4px; color: #444; font-size: 1em; }
+    .copy-btn { margin-left: 6px; background: #fbc02d; color: #222; border: none; border-radius: 3px; padding: 3px 10px; cursor: pointer; font-size: 0.96em; }
+    .copied-msg { margin-left: 5px; color: #388e3c; font-size: 0.93em; }
+    .output-block {
+  margin-top: 16px;
+  margin-bottom: 24px;
+}
+pre.sample-output::before {
+  content: "Sample Output:";
+  display: block;
+  color: #39ff14;
+  font-family: inherit;
+  font-size: 1rem;
+  margin-bottom: 8px;
+}
+
+.output-label {
+
+  font-size: 0.95rem;
+  color: #555;
+  font-weight: 500;
+  margin-bottom: 6px;
+  font-family: 'Inter', sans-serif;
+}
+pre.sample-output {
+
+  background: #000000;
+  color: #39ff14; /* Neon green */
+  font-family: 'Fira Code', 'Courier New', monospace;
+  font-size: 1rem;
+  padding: 16px;
+  border-radius: 6px;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  border: 1px solid #333;
+  text-shadow: none;
+}
+
+body.dark {
+  background: #23272a;
+  color: #e0e0e0;
+}
+
+body.dark section {
+  background: #2d2f3a;
+}
+
+body.dark .section-header {
+  color: #90caf9;
+  border-bottom: 1px solid #444;
+}
+
+body.dark .command {
+  background: #424242;
+  color: #ffe082;
+}
+
+body.dark .description {
+  color: #b0bec5;
+}
+
+body.dark .copy-btn {
+  background: #333;
+  color: #fff;
+}
+
+body.dark .copy-btn:hover {
+  background: #444;
+}
+
+body.dark .search-input,
+body.dark .quick-jump {
+  background: #2c2c2c;
+  color: #e5e5e5;
+  border: 1px solid #444;
+}
+
+body.dark .toggle-btn {
+  background: #ffe082;
+  color: #222;
+body.dark .quick-jump {
+  background-color: #2c2c2c;
+  color: #e5e5e5;
+  border: 1px solid #444;
+}
+}
+</style>
+</head>
+<body>
+<header>
+  <h1 class="main-title">FortiGate Command-Line Essentials</h1>
+
+  <div class="tool-podium">
+    <div class="tool-container">
+      <input type="text" class="search-input" id="searchInput" placeholder="Search commands, descriptions, or section... (Ctrl+F)">
+      <select class="quick-jump" id="quickJumpMenu" title="Jump to section">
+        <option value="" disabled selected>Jump to</option>
+      </select>
+      <button class="toggle-btn" id="toggleThemeBtn" title="Toggle dark/light mode">🌙 Dark Mode</button>
+    </div>
+  </div>
+</header>  
+<section id="commandList">
+
+    <!-- 1. Enable/Disable debugging -->
+    <div class="section-block" id="section-1">
+      <div class="section-header"><span class="arrow">►</span>1. Enable/Disable debugging</div>
+      <div class="section-content">
+        <div class="command-block">
+          <div class="command-row">
+            <span class="command">diagnose debug reset</span>
+            <button class="copy-btn" onclick="copyCommand('diagnose debug reset', this)">Copy</button>
+            <span class="copied-msg" id="copied-diagnose debug reset"></span>
+          </div>
+          <div class="description">Stop all the prior debugs that were enabled and running in the foreground or background.</div>
+          <pre class="sample-output">
+Debugging has been reset.
+          </pre>
+        </div>
+        <div class="command-block">
+          <div class="command-row">
+            <span class="command">diagnose debug enable</span>
+            <button class="copy-btn" onclick="copyCommand('diagnose debug enable', this)">Copy</button>
+            <span class="copied-msg" id="copied-diagnose debug enable"></span>
+          </div>
+          <div class="description">Start printing debugs in the console.</div>
+          <pre class="sample-output">
+Debug messages will now be shown in the console.
+          </pre>
+        </div>
+        <div class="command-block">
+          <div class="command-row">
+            <span class="command">diagnose debug disable</span>
+            <button class="copy-btn" onclick="copyCommand('diagnose debug disable', this)">Copy</button>
+            <span class="copied-msg" id="copied-diagnose debug disable"></span>
+          </div>
+          <div class="description">Stop printing debugs in the console. The debugs are still running in the background; use diagnose debug reset to completely stop them.</div>
+          <pre class="sample-output">
+Debug messages will no longer be shown in the console.
+          </pre>
+        </div>
+        <div class="command-block">
+          <div class="command-row">
+            <span class="command">diagnose debug duration 0</span>
+            <button class="copy-btn" onclick="copyCommand('diagnose debug duration 0', this)">Copy</button>
+            <span class="copied-msg" id="copied-diagnose debug duration 0"></span>
+          </div>
+          <div class="description">Start debugging for infinite duration. By default, debug is set for 30 minutes.</div>
+          <pre class="sample-output">
+Debug duration set to infinite.
+          </pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. System -->
+    <div class="section-block" id="section-2">
+      <div class="section-header"><span class="arrow">►</span>2. System</div>
+      <div class="section-content">
+        <div class="command-block">
+          <div class="command-row">
+            <span class="command">get system status</span>
+            <button class="copy-btn" onclick="copyCommand('get system status', this)">Copy</button>
+            <span class="copied-msg" id="copied-get system status"></span>
+          </div>
+          <div class="description">Show system information.</div>
+          <pre class="sample-output">
+Version: FortiGate-VM64 v7.0.12,build0600,230630 (GA)
+Serial-Number: FGVM02TM20000000
+License Status: Valid
+Hostname: FGT-VM
+Operation Mode: NAT
+Current virtual domain: root
+Max number of virtual domains: 10
+Current HA mode: standalone
+Uptime: 12 days, 6 hours, 14 minutes
+          </pre>
+        </div>
+        <div class="command-block">
+          <div class="command-row">
+            <span class="command">execute time</span>
+            <button class="copy-btn" onclick="copyCommand('execute time', this)">Copy</button>
+            <span class="copied-msg" id="copied-execute time"></span>
+          </div>
+          <div class="description">Show current system time.</div>
+          <pre class="sample-output">
+Current time: Thu Jul  3 16:49:00 IST 2025
+          </pre>
+        </div>
+        <div class="command-block">
+          <div class="command-row">
+            <span class="command">get system performance status</span>
+            <button class="copy-btn" onclick="copyCommand('get system performance status', this)">Copy</button>
+            <span class="copied-msg" id="copied-get system performance status"></span>
+          </div>
+          <div class="description">Show CPU and memory utilization.</div>
+          <pre class="sample-output">
+CPU states: 0% user 0% system 0% nice 100% idle
+Memory:  1456M used,  2048M total
+Average network usage:  0 kbps in  0 kbps out
+Average sessions: 5 sessions, 0 sessions per second
+Uptime: 12 days, 6 hours, 14 minutes
+          </pre>
+        </div>
+        <div class="command-block">
+          <div class="command-row">
+            <span class="command">execute tac report</span>
+            <button class="copy-btn" onclick="copyCommand('execute tac report', this)">Copy</button>
+            <span class="copied-msg" id="copied-execute tac report"></span>
+          </div>
+          <div class="description">Execute TAC report used to open a support ticket with Fortinet Support.</div>
+          <pre class="sample-output">
+Generating TAC report...
+TAC report completed and saved as tac_report.txt
+          </pre>
+        </div>
+        <div class="command-block">
+          <div class="command-row">
+            <span class="command">diagnose sys top 1 5 1</span>
+            <button class="copy-btn" onclick="copyCommand('diagnose sys top 1 5 1', this)">Copy</button>
+            <span class="copied-msg" id="copied-diagnose sys top 1 5 1"></span>
+          </div>
+          <div class="description">Show a list of the first 5 processes every 1 second for 1 iteration.</div>
+          <pre class="sample-output">
+Run Time: 0 days, 12 hours, 20 minutes
+  PID   CPU   MEM   NAME
+    1    0%   1.2%  init
+   45    0%   0.8%  klogd
+   56    0%   0.9%  syslogd
+  200    0%   2.3%  httpsd
+  321    0%   1.7%  sshd
+          </pre>
+        </div>
+        <div class="command-block">
+          <div class="command-row">
+            <span class="command">diagnose debug crashlog read</span>
+            <button class="copy-btn" onclick="copyCommand('diagnose debug crashlog read', this)">Copy</button>
+            <span class="copied-msg" id="copied-diagnose debug crashlog read"></span>
+          </div>
+          <div class="description">Show system and application crashes.</div>
+          <pre class="sample-output">
+No crash logs found.
+          </pre>
+        </div>
+        <div class="command-block">
+          <div class="command-row">
+            <span class="command">diagnose sys process pidof httpsd</span>
+            <button class="copy-btn" onclick="copyCommand('diagnose sys process pidof httpsd', this)">Copy</button>
+            <span class="copied-msg" id="copied-diagnose sys process pidof httpsd"></span>
+          </div>
+          <div class="description">Show PID of the daemon that is running.</div>
+          <pre class="sample-output">
+httpsd: 200
+          </pre>
+        </div>
+        <div class="command-block">
+          <div class="command-row">
+            <span class="command">diagnose sys kill 11 200</span>
+            <button class="copy-btn" onclick="copyCommand('diagnose sys kill 11 200', this)">Copy</button>
+            <span class="copied-msg" id="copied-diagnose sys kill 11 200"></span>
+          </div>
+          <div class="description">Kill the PID with signal 11.</div>
+          <pre class="sample-output">
+Process 200 killed with signal 11.
+          </pre>
+        </div>
+        <div class="command-block">
+          <div class="command-row">
+            <span class="command">diagnose sys session stat</span>
+            <button class="copy-btn" onclick="copyCommand('diagnose sys session stat', this)">Copy</button>
+            <span class="copied-msg" id="copied-diagnose sys session stat"></span>
+          </div>
+          <div class="description">Show session statistics.</div>
+          <pre class="sample-output">
+session_count=5 setup_rate=0 expire_rate=0 inuse=5
+          </pre>
+        </div>
+        <div class="command-block">
+          <div class="command-row">
+            <span class="command">diagnose sys session exp-stat</span>
+            <button class="copy-btn" onclick="copyCommand('diagnose sys session exp-stat', this)">Copy</button>
+            <span class="copied-msg" id="copied-diagnose sys session exp-stat"></span>
+          </div>
+          <div class="description">Show expectation session statistics.</div>
+          <pre class="sample-output">
+expectation session count: 0
+          </pre>
+        </div>
+        <div class="command-block">
+          <div class="command-row">
+            <span class="command">diagnose sys vd list</span>
+            <button class="copy-btn" onclick="copyCommand('diagnose sys vd list', this)">Copy</button>
+            <span class="copied-msg" id="copied-diagnose sys vd list"></span>
+          </div>
+          <div class="description">Show virtual domain information and system statistics.</div>
+          <pre class="sample-output">
+VDOM: root, ID: 0, status: up
+          </pre>
+        </div>
+        <div class="command-block">
+          <div class="command-row">
+            <span class="command">diagnose sys cmdb info</span>
+            <button class="copy-btn" onclick="copyCommand('diagnose sys cmdb info', this)">Copy</button>
+            <span class="copied-msg" id="copied-diagnose sys cmdb info"></span>
+          </div>
+          <div class="description">Show information about the latest configuration change performed by the daemon.</div>
+          <pre class="sample-output">
+Last configuration change: 2025-07-03 16:30:00 by admin
+          </pre>
+        </div>
+
+        <div class="command-block">
+  <div class="command-row">
+    <span class="command">execute factoryreset [keepvmlicense]</span>
+    <button class="copy-btn" onclick="copyCommand('execute factoryreset [keepvmlicense]', this)">Copy</button>
+    <span class="copied-msg" id="copied-execute factoryreset [keepvmlicense]"></span>
+  </div>
+  <div class="description">
+    Immediately reset to factory defaults and reboot. If keepvmlicense is specified (VM models only), the VM license is retained after reset.
+  </div>
+  <pre class="sample-output">
+This operation will reset the system to factory default settings and reboot.
+All configuration and logs will be lost.
+Do you want to continue? (y/n)y
+
+Factory reset initiated...
+Saving VM license...done.
+Erasing configuration...done.
+Rebooting system...
+
+FortiGate-VM64 (Rebooting)
+  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">execute factoryreset-shutdown [keepvmlicense]</span>
+    <button class="copy-btn" onclick="copyCommand('execute factoryreset-shutdown [keepvmlicense]', this)">Copy</button>
+    <span class="copied-msg" id="copied-execute factoryreset-shutdown [keepvmlicense]"></span>
+  </div>
+  <div class="description">
+    Immediately reset to factory defaults and shutdown. If keepvmlicense is specified (VM models only), the VM license is retained after reset.
+  </div>
+  <pre class="sample-output">
+This operation will reset the system to factory default settings and shutdown.
+All configuration and logs will be lost.
+Do you want to continue? (y/n)y
+
+Factory reset initiated...
+Saving VM license...done.
+Erasing configuration...done.
+Shutting down system...
+
+FortiGate-VM64 (Shutting down)
+  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">execute factoryreset2 [keepvmlicense]</span>
+    <button class="copy-btn" onclick="copyCommand('execute factoryreset2 [keepvmlicense]', this)">Copy</button>
+    <span class="copied-msg" id="copied-execute factoryreset2 [keepvmlicense]"></span>
+  </div>
+  <div class="description">
+    Reset to factory default, except system settings, system interfaces, VDOMs, static routes, and virtual switches. If keepvmlicense is specified (VM models only), the VM license is retained after reset.
+  </div>
+  <pre class="sample-output">
+This operation will reset most settings to factory defaults, except system settings, system interfaces, VDOMs, static routes, and virtual switches.
+All other configuration and logs will be lost.
+Do you want to continue? (y/n)y
+
+Partial factory reset initiated...
+Saving VM license...done.
+Erasing selected configuration...done.
+Rebooting system...
+
+FortiGate-VM64 (Rebooting)
+  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">diagnose debug config-error-log read</span>
+    <button class="copy-btn" onclick="copyCommand('diagnose debug config-error-log read', this)">Copy</button>
+    <span class="copied-msg" id="copied-diagnose debug config-error-log read"></span>
+  </div>
+  <div class="description">
+    Show errors in the configuration file.
+  </div>
+  <pre class="sample-output">
+FortiGate-VM # diagnose debug config-error-log read
+config system interface
+    edit "port2"
+        set ip 192.168.2.1/24
+        unset allowaccess
+        **Error: Invalid IP address format**
+    next
+end
+config firewall policy
+    edit 1
+        set srcintf "port1"
+        set dstintf "port2"
+        set action accept
+        **Error: Missing required field 'service'**
+    next
+end
+  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">diagnose snmp ip frags</span>
+    <button class="copy-btn" onclick="copyCommand('diagnose snmp ip frags', this)">Copy</button>
+    <span class="copied-msg" id="copied-diagnose snmp ip frags"></span>
+  </div>
+  <div class="description">
+    Show fragmentation and reassembly information.
+  </div>
+  <pre class="sample-output">
+Fragmentation statistics:
+  Fragments received: 120
+  Fragments dropped: 2
+  Packets reassembled: 118
+  Reassembly failures: 1
+  Largest packet reassembled: 1492 bytes
+  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">diagnose sys process dump &lt;PID&gt;</span>
+    <button class="copy-btn" onclick="copyCommand('diagnose sys process dump &lt;PID&gt;', this)">Copy</button>
+    <span class="copied-msg" id="copied-diagnose sys process dump &lt;PID&gt;"></span>
+  </div>
+  <div class="description">
+    Show essential process related information for a particular process PID.
+  </div>
+  <pre class="sample-output">
+Process dump for PID 1234:
+  Process Name: httpsd
+  State: S (sleeping)
+  Threads: 5
+  CPU Usage: 0.2%
+  Memory Usage: 12.3 MB
+  Open Files: 24
+  Start Time: 2025-07-04 10:15:22
+  Command Line: /bin/httpsd -c /etc/httpsd.conf
+  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">diagnose sys process pstack &lt;PID&gt;</span>
+    <button class="copy-btn" onclick="copyCommand('diagnose sys process pstack &lt;PID&gt;', this)">Copy</button>
+    <span class="copied-msg" id="copied-diagnose sys process pstack &lt;PID&gt;"></span>
+  </div>
+  <div class="description">
+    Capture the current call stack of a FortiGate process, which helps in debugging or analyzing the cause of crashes, hangs, high CPU, or memory leaks.
+  </div>
+  <pre class="sample-output">
+Thread 1 (Thread 0x7f8b5c1a8740 (LWP 1234)):
+#0  0x00007f8b5a1b2d80 in poll () from /lib64/libc.so.6
+#1  0x000000000041e8e2 in main_loop ()
+#2  0x000000000041b2ff in main ()
+Thread 2 (Thread 0x7f8b5b9a7740 (LWP 1235)):
+#0  0x00007f8b5a1b2d80 in poll () from /lib64/libc.so.6
+#1  0x0000000000421a7d in worker_thread ()
+  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">diagnose sys process trace &lt;PID&gt;</span>
+    <button class="copy-btn" onclick="copyCommand('diagnose sys process trace &lt;PID&gt;', this)">Copy</button>
+    <span class="copied-msg" id="copied-diagnose sys process trace &lt;PID&gt;"></span>
+  </div>
+  <div class="description">
+    Display a backtrace of the active threads and function calls of a specified FortiGate process.
+  </div>
+  <pre class="sample-output">
+Backtrace for process 1234:
+[New LWP 1234]
+[Thread debugging using libthread_db enabled]
+0x00007f8b5a1b2d80 in poll () from /lib64/libc.so.6
+#0  0x00007f8b5a1b2d80 in poll () from /lib64/libc.so.6
+#1  0x000000000041e8e2 in main_loop ()
+#2  0x000000000041b2ff in main ()
+  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">diagnose sys mpstat {n}</span>
+    <button class="copy-btn" onclick="copyCommand('diagnose sys mpstat {n}', this)">Copy</button>
+    <span class="copied-msg" id="copied-diagnose sys mpstat {n}"></span>
+  </div>
+  <div class="description">
+    Show CPU usage every n seconds.
+  </div>
+  <pre class="sample-output">
+FortiGate-VM # diagnose sys mpstat 2
+Linux 3.10.0-957.21.3.el7.x86_64 (FGT-VM) 	07/04/2025 	_x86_64_	(4 CPU)
+
+11:15:01 AM  CPU   %usr   %nice    %sys %iowait    %irq   %soft  %steal  %guest   %idle
+11:15:01 AM    0    2.0     0.0     1.5     0.0     0.0     0.0     0.0     0.0    96.5
+11:15:01 AM    1    1.5     0.0     1.0     0.0     0.0     0.0     0.0     0.0    97.5
+11:15:01 AM    2    2.5     0.0     2.0     0.0     0.0     0.0     0.0     0.0    95.5
+11:15:01 AM    3    1.0     0.0     1.0     0.0     0.0     0.0     0.0     0.0    98.0
+  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">diagnose hardware sysinfo memory</span>
+    <button class="copy-btn" onclick="copyCommand('diagnose hardware sysinfo memory', this)">Copy</button>
+    <span class="copied-msg" id="copied-diagnose hardware sysinfo memory"></span>
+  </div>
+  <div class="description">
+    Show system memory information.
+  </div>
+  <pre class="sample-output">
+Memory Information:
+Total RAM: 4096 MB
+Used RAM: 1234 MB
+Free RAM: 2862 MB
+Buffers: 100 MB
+Cached: 300 MB
+Swap Total: 2048 MB
+Swap Used: 0 MB
+  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">diagnose firewall packet distribution</span>
+    <button class="copy-btn" onclick="copyCommand('diagnose firewall packet distribution', this)">Copy</button>
+    <span class="copied-msg" id="copied-diagnose firewall packet distribution"></span>
+  </div>
+  <div class="description">
+    Show packet distribution statistics.
+  </div>
+  <pre class="sample-output">
+Packet Distribution Statistics:
+CPU0:  105432 packets
+CPU1:  104987 packets
+CPU2:  106123 packets
+CPU3:  105876 packets
+Total: 422418 packets
+  </pre>
+</div>
+
+
+        <div class="command-block">
+          <div class="command-row">
+            <span class="command">execute reboot</span>
+            <button class="copy-btn" onclick="copyCommand('execute reboot', this)">Copy</button>
+            <span class="copied-msg" id="copied-execute reboot"></span>
+          </div>
+          <div class="description">Reboot the device.</div>
+          <pre class="sample-output">
+This operation will reboot the system!
+Proceed? (y/n)y
+System is rebooting...
+          </pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. Hardware -->
+    <div class="section-block" id="section-3">
+      <div class="section-header"><span class="arrow">►</span>3. Hardware</div>
+      <div class="section-content">
+        <div class="command-block">
+          <div class="command-row">
+            <span class="command">diagnose hardware sysinfo interrupts</span>
+            <button class="copy-btn" onclick="copyCommand('diagnose hardware sysinfo interrupts', this)">Copy</button>
+            <span class="copied-msg" id="copied-diagnose hardware sysinfo interrupts"></span>
+          </div>
+          <div class="description">Show hardware interrupts statistics.</div>
+          <pre class="sample-output">
+CPU0       0:  123456   eth0
+CPU0       1:  654321   timer
+          </pre>
+        </div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">diagnose hardware test suite all</span>
+    <button class="copy-btn" onclick="copyCommand('diagnose hardware test suite all', this)">Copy</button>
+    <span class="copied-msg" id="copied-diagnose hardware test suite all"></span>
+  </div>
+  <div class="description">
+    Execute a hardware diagnostic test, also known as an HQIP test.
+  </div>
+  <pre class="sample-output">
+Starting HQIP hardware diagnostics...
+
+[CPU Test]           Passed
+[Memory Test]        Passed
+[Disk Test]          Passed
+[Network Test]       Passed
+[Interface Test]     Passed
+
+All hardware tests completed successfully.
+  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">diagnose hardware deviceinfo disk</span>
+    <button class="copy-btn" onclick="copyCommand('diagnose hardware deviceinfo disk', this)">Copy</button>
+    <span class="copied-msg" id="copied-diagnose hardware deviceinfo disk"></span>
+  </div>
+  <div class="description">
+    Show disk information.
+  </div>
+  <pre class="sample-output">
+Disk Information:
+Device: /dev/sda
+Model: VIRTUAL DISK
+Size: 40 GB
+Status: Healthy
+Partitions: 2
+  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">diagnose sys flash list</span>
+    <button class="copy-btn" onclick="copyCommand('diagnose sys flash list', this)">Copy</button>
+    <span class="copied-msg" id="copied-diagnose sys flash list"></span>
+  </div>
+  <div class="description">
+    Show flash partitions.
+  </div>
+  <pre class="sample-output">
+Flash Partitions:
+Partition 1: Boot    64 MB
+Partition 2: Root   512 MB
+Partition 3: Log   1024 MB
+Partition 4: Data  2048 MB
+  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">execute disk list</span>
+    <button class="copy-btn" onclick="copyCommand('execute disk list', this)">Copy</button>
+    <span class="copied-msg" id="copied-execute disk list"></span>
+  </div>
+  <div class="description">
+    Show available mounted disks.
+  </div>
+  <pre class="sample-output">
+Mounted Disks:
+/dev/sda1  64M   Boot
+/dev/sda2  512M  Root
+/dev/sda3  1G    Log
+/dev/sda4  2G    Data
+  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">execute disk format &lt;partition ref&gt;</span>
+    <button class="copy-btn" onclick="copyCommand('execute disk format &lt;partition ref&gt;', this)">Copy</button>
+    <span class="copied-msg" id="copied-execute disk format &lt;partition ref&gt;"></span>
+  </div>
+  <div class="description">
+    Format the referenced partition.
+  </div>
+  <pre class="sample-output">
+Formatting partition /dev/sda3 (Log)...
+All data on this partition will be lost.
+Do you want to continue? (y/n)y
+
+Formatting...done.
+Partition /dev/sda3 formatted successfully.
+  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">diagnose disktest device &lt;device&gt;</span>
+    <button class="copy-btn" onclick="copyCommand('diagnose disktest device &lt;device&gt;', this)">Copy</button>
+    <span class="copied-msg" id="copied-diagnose disktest device &lt;device&gt;"></span>
+  </div>
+  <div class="description">
+    Execute a disk check to check if disk is faulty.
+  </div>
+  <pre class="sample-output">
+Starting disk test on /dev/sda...
+Read test: Passed
+Write test: Passed
+SMART status: OK
+
+Disk /dev/sda is healthy.
+  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">diagnose disktest block &lt;block&gt;</span>
+    <button class="copy-btn" onclick="copyCommand('diagnose disktest block &lt;block&gt;', this)">Copy</button>
+    <span class="copied-msg" id="copied-diagnose disktest block &lt;block&gt;"></span>
+  </div>
+  <div class="description">
+    &lt;device&gt;: Device to test
+  </div>
+  <pre class="sample-output">
+Testing block 1024 on device /dev/sda...
+Block 1024: Read OK, Write OK
+  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">diagnose disktest size &lt;mb&gt;</span>
+    <button class="copy-btn" onclick="copyCommand('diagnose disktest size &lt;mb&gt;', this)">Copy</button>
+    <span class="copied-msg" id="copied-diagnose disktest size &lt;mb&gt;"></span>
+  </div>
+  <div class="description">
+    &lt;block&gt;: Block size of each read/write operation.
+  </div>
+  <pre class="sample-output">
+Setting block size to 64 MB for disk test operations.
+Block size set successfully.
+  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">diagnose disk test run</span>
+    <button class="copy-btn" onclick="copyCommand('diagnose disk test run', this)">Copy</button>
+    <span class="copied-msg" id="copied-diagnose disk test run"></span>
+  </div>
+  <div class="description">
+    &lt;mb&gt;: Test size limit for each cycle
+  </div>
+  <pre class="sample-output">
+Running disk test with 1024 MB per cycle...
+Cycle 1: Passed
+Cycle 2: Passed
+Cycle 3: Passed
+
+Disk test completed successfully.
+  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">execute formatlogdisk</span>
+    <button class="copy-btn" onclick="copyCommand('execute formatlogdisk', this)">Copy</button>
+    <span class="copied-msg" id="copied-execute formatlogdisk"></span>
+  </div>
+  <div class="description">
+    Format the log disk.
+  </div>
+  <pre class="sample-output">
+This operation will format the log disk.
+All log data will be erased.
+Do you want to continue? (y/n)y
+
+Formatting log disk...done.
+Log disk formatted successfully.
+  </pre>
+</div>
+
+
+        <div class="command-block">
+          <div class="command-row">
+            <span class="command">diagnose hardware sysinfo cpu</span>
+            <button class="copy-btn" onclick="copyCommand('diagnose hardware sysinfo cpu', this)">Copy</button>
+            <span class="copied-msg" id="copied-diagnose hardware sysinfo cpu"></span>
+          </div>
+          <div class="description">Show CPU information.</div>
+          <pre class="sample-output">
+processor   : 0
+model name  : ARMv7 Processor rev 1 (v7l)
+BogoMIPS    : 1999.99
+Features    : half thumb fastmult vfp edsp neon vfpv3 tls vfpd32
+CPU implementer : 0x41
+CPU architecture: 7
+CPU variant : 0x0
+CPU part    : 0xc07
+CPU revision    : 1
+          </pre>
+        </div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">diagnose sys modem detect</span>
+    <button class="copy-btn" onclick="copyCommand('diagnose sys modem detect', this)">Copy</button>
+    <span class="copied-msg" id="copied-diagnose sys modem detect"></span>
+  </div>
+  <div class="description">
+    Detect the modem and start real-time debugging of the modem daemon.
+  </div>
+  <pre class="sample-output">
+Detecting modem...
+Modem detected: USB Modem [Vendor: Huawei, Model: E3372]
+Starting real-time debugging of modem daemon...
+Modem status: Connected
+Signal strength: Excellent
+  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">diagnose debug application modemd -1 <--- Execute this first</span>
+    <button class="copy-btn" onclick="copyCommand('diagnose debug application modemd -1', this)">Copy</button>
+    <span class="copied-msg" id="copied-diagnose debug application modemd -1"></span>
+  </div>
+  <div class="description">
+    </div>
+
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">diagnose debug enable <--- Now execute this </span>
+    <button class="copy-btn" onclick="copyCommand('diagnose debug enable', this)">Copy</button>
+    <span class="copied-msg" id="copied-diagnose debug enable"></span>
+  </div>
+  <div class="description">
+    1. The two commands are correlated: the first configures, the second activates.<br>
+    2. Only one output stream appears, after both commands are run. 
+  </div>
+  <pre class="sample-output">
+[ModemD][2025-07-07 17:47:12] Modem daemon started.
+[ModemD][2025-07-07 17:47:12] Initializing modem interface...
+[ModemD][2025-07-07 17:47:13] Sending AT command: ATZ
+[ModemD][2025-07-07 17:47:13] Received response: OK
+[ModemD][2025-07-07 17:47:13] Checking SIM card status...
+[ModemD][2025-07-07 17:47:14] SIM card detected.
+[ModemD][2025-07-07 17:47:14] Registering to network...
+[ModemD][2025-07-07 17:47:15] Network registration successful.
+[ModemD][2025-07-07 17:47:15] Signal strength: -65 dBm
+[ModemD][2025-07-07 17:47:16] Starting data connection...
+[ModemD][2025-07-07 17:47:17] Data connection established.
+[ModemD][2025-07-07 17:47:18] Monitoring modem status...
+[ModemD][2025-07-07 17:47:19] Heartbeat OK.
+  </pre>
+</div>
+      </div>
+    </div>
+
+
+    <!-- 4. Session table -->
+    <div class="section-block" id="section-4">
+      <div class="section-header"><span class="arrow">►</span>4. Session table</div>
+      <div class="section-content">
+        <div class="command-block">
+          <div class="command-row">
+            <span class="command">diagnose sys session list</span>
+            <button class="copy-btn" onclick="copyCommand('diagnose sys session list', this)">Copy</button>
+            <span class="copied-msg" id="copied-diagnose sys session list"></span>
+          </div>
+          <div class="description">Show session table after filtering.</div>
+          <pre class="sample-output">
+session info: proto=6 proto_state=01 duration=12 expire=348 timeout=360 flags=00000000 socktype=0 sockport=0 av_idx=0 use=2
+src=192.168.1.10:54321 dst=8.8.8.8:53
+state=log may_dirty npu
+          </pre>
+        </div>
+        <div class="command-block">
+          <div class="command-row">
+            <span class="command">diagnose sys session clear</span>
+            <button class="copy-btn" onclick="copyCommand('diagnose sys session clear', this)">Copy</button>
+            <span class="copied-msg" id="copied-diagnose sys session clear"></span>
+          </div>
+          <div class="description">Clear the session table for the specified filter.</div>
+          <pre class="sample-output">
+All matching sessions cleared.
+          </pre>
+        </div>
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">diagnose sys session filter &lt;filter&gt;</span>
+    <button class="copy-btn" onclick="copyCommand('diagnose sys session filter &lt;filter&gt;', this)">Copy</button>
+    <span class="copied-msg" id="copied-diagnose sys session filter &lt;filter&gt;"></span>
+  </div>
+  <div class="description">
+    Set session table filters.
+  </div>
+  <pre class="sample-output">
+# diagnose sys session filter src 192.168.1.10
+# diagnose sys session filter dport 80
+# diagnose sys session filter
+
+session filter:
+vd: any
+proto: any
+source ip: 192.168.1.10
+dest ip: any
+source port: any
+dest port: 80
+policy id: any
+expire: any
+duration: any
+  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">diagnose sys session filter</span>
+    <button class="copy-btn" onclick="copyCommand('diagnose sys session filter', this)">Copy</button>
+    <span class="copied-msg" id="copied-diagnose sys session filter"></span>
+  </div>
+  <div class="description">
+    Show session filters, if set.
+  </div>
+  <pre class="sample-output">
+# diagnose sys session filter
+
+session filter:
+vd: any
+proto: any
+source ip: 192.168.1.10
+dest ip: any
+source port: any
+dest port: 80
+policy id: any
+expire: any
+duration: any
+  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">diagnose firewall iprope list</span>
+    <button class="copy-btn" onclick="copyCommand('diagnose firewall iprope list', this)">Copy</button>
+    <span class="copied-msg" id="copied-diagnose firewall iprope list"></span>
+  </div>
+  <div class="description">
+    Show FortiGate’s internal firewall table.
+  </div>
+  <pre class="sample-output">
+# diagnose firewall iprope list
+
+policy  id=1  src=port1  dst=port2  action=accept  status=enabled
+policy  id=2  src=port2  dst=port1  action=deny    status=enabled
+policy  id=3  src=port3  dst=port4  action=accept  status=disabled
+
+Total policies: 3
+  </pre>
+
+</div>
+
+      </div>
+    </div>
+
+    <!-- 5. Network diagnostics -->
+    <div class="section-block" id="section-5">
+      <div class="section-header"><span class="arrow">►</span>5. Network diagnostics</div>
+      <div class="section-content">
+        <div class="command-block">
+          <div class="command-row">
+            <span class="command">get system arp</span>
+            <button class="copy-btn" onclick="copyCommand('get system arp', this)">Copy</button>
+            <span class="copied-msg" id="copied-get system arp"></span>
+          </div>
+          <div class="description">Show ARP entries.</div>
+          <pre class="sample-output">
+Address           Age(min)   Hardware Addr    Interface
+192.168.1.1       0          00:09:0f:09:00:01   port1
+192.168.1.10      2          00:0c:29:ab:cd:ef   port2
+          </pre>
+        </div>
+        <div class="command-block">
+          <div class="command-row">
+            <span class="command">get system interface</span>
+            <button class="copy-btn" onclick="copyCommand('get system interface', this)">Copy</button>
+            <span class="copied-msg" id="copied-get system interface"></span>
+          </div>
+          <div class="description">Show a summary of interface details, including IP address information.</div>
+          <pre class="sample-output">
+name: port1
+  ip: 192.168.1.99 255.255.255.0
+  status: up
+name: port2
+  ip: 10.10.10.1 255.255.255.0
+  status: down
+          </pre>
+        </div>
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">execute ping-options {options}</span>
+    <button class="copy-btn" onclick="copyCommand('execute ping-options {options}', this)">Copy</button>
+    <span class="copied-msg" id="copied-execute ping-options {options}"></span>
+  </div>
+  <div class="description">
+    Ping IP address &lt;x.x.x.x&gt; using the specified options.
+  </div>
+  <pre class="sample-output">
+# execute ping-options source 192.168.1.99
+# execute ping-options repeat-count 3
+# execute ping-options view-settings
+
+Ping Options:
+Repeat Count: 3
+Data Size: 56
+Timeout: 2
+TTL: 64
+TOS: 0
+DF bit: unset
+Source Address: 192.168.1.99
+Pattern:
+Pattern Size in Bytes: 0
+Validate Reply: no
+  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">execute ping &lt;x.x.x.x&gt;</span>
+    <button class="copy-btn" onclick="copyCommand('execute ping <x.x.x.x>', this)">Copy</button>
+    <span class="copied-msg" id="copied-execute ping &lt;x.x.x.x&gt;"></span>
+  </div>
+  <div class="description">
+    Send ICMP echo requests to the specified IP address.
+  </div>
+  <pre class="sample-output">
+# execute ping 8.8.8.8
+PING 8.8.8.8 (8.8.8.8): 56 data bytes
+64 bytes from 8.8.8.8: icmp_seq=1 ttl=119 time=10.2 ms
+64 bytes from 8.8.8.8: icmp_seq=2 ttl=119 time=10.1 ms
+64 bytes from 8.8.8.8: icmp_seq=3 ttl=119 time=10.0 ms
+
+--- 8.8.8.8 ping statistics ---
+3 packets transmitted, 3 packets received, 0% packet loss
+round-trip min/avg/max = 10.0/10.1/10.2 ms
+  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">execute ssh-options {options}</span>
+    <button class="copy-btn" onclick="copyCommand('execute ssh-options {options}', this)">Copy</button>
+    <span class="copied-msg" id="copied-execute ssh-options {options}"></span>
+  </div>
+  <div class="description">
+    SSH to IP address &lt;x.x.x.x&gt; using the specified options.
+  </div>
+  <pre class="sample-output">
+# execute ssh-options port 2222
+# execute ssh 192.168.1.100
+Connecting to 192.168.1.100:2222...
+The authenticity of host '192.168.1.100 (192.168.1.100)' can't be established.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added '192.168.1.100' (ECDSA) to the list of known hosts.
+login as: admin
+admin@192.168.1.100's password:
+Welcome to FortiGate CLI!
+  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">execute ssh &lt;x.x.x.x&gt;</span>
+    <button class="copy-btn" onclick="copyCommand('execute ssh <x.x.x.x>', this)">Copy</button>
+    <span class="copied-msg" id="copied-execute ssh &lt;x.x.x.x&gt;"></span>
+  </div>
+  <div class="description">
+    Start an SSH session to the specified IP address.
+  </div>
+  <pre class="sample-output">
+# execute ssh 192.168.1.100
+Connecting to 192.168.1.100...
+login as: admin
+admin@192.168.1.100's password:
+Welcome to FortiGate CLI!
+  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">execute traceroute-options {options}</span>
+    <button class="copy-btn" onclick="copyCommand('execute traceroute-options {options}', this)">Copy</button>
+    <span class="copied-msg" id="copied-execute traceroute-options {options}"></span>
+  </div>
+  <div class="description">
+    Traceroute IP address &lt;x.x.x.x&gt; using the specified options.
+  </div>
+  <pre class="sample-output">
+# execute traceroute-options max-hop 10
+# execute traceroute 8.8.8.8
+traceroute to 8.8.8.8 (8.8.8.8), 10 hops max, 60 byte packets
+ 1  192.168.1.1  1.123 ms  1.154 ms  1.201 ms
+ 2  10.0.0.1     2.345 ms  2.321 ms  2.310 ms
+ 3  172.16.0.1   4.567 ms  4.534 ms  4.521 ms
+ 4  8.8.8.8     10.123 ms 10.101 ms 10.099 ms
+  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">execute traceroute &lt;x.x.x.x&gt;</span>
+    <button class="copy-btn" onclick="copyCommand('execute traceroute <x.x.x.x>', this)">Copy</button>
+    <span class="copied-msg" id="copied-execute traceroute &lt;x.x.x.x&gt;"></span>
+  </div>
+  <div class="description">
+    Trace the route to the specified IP address.
+  </div>
+  <pre class="sample-output">
+# execute traceroute 8.8.8.8
+traceroute to 8.8.8.8 (8.8.8.8), 30 hops max, 60 byte packets
+ 1  192.168.1.1  1.123 ms  1.154 ms  1.201 ms
+ 2  10.0.0.1     2.345 ms  2.321 ms  2.310 ms
+ 3  172.16.0.1   4.567 ms  4.534 ms  4.521 ms
+ 4  8.8.8.8     10.123 ms 10.101 ms 10.099 ms
+  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">diagnose ip arp list</span>
+    <button class="copy-btn" onclick="copyCommand('diagnose ip arp list', this)">Copy</button>
+    <span class="copied-msg" id="copied-diagnose ip arp list"></span>
+  </div>
+  <div class="description">
+    Show the ARP table.
+  </div>
+  <pre class="sample-output">
+# diagnose ip arp list
+Address           Age(min)   Hardware Addr    Interface
+192.168.1.1       0          00:0c:29:ab:cd:ef port1
+192.168.1.10      2          00:0c:29:12:34:56 port2
+10.0.0.1          5          00:0c:29:65:43:21 port3
+  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">diagnose netlink brctl list</span>
+    <button class="copy-btn" onclick="copyCommand('diagnose netlink brctl list', this)">Copy</button>
+    <span class="copied-msg" id="copied-diagnose netlink brctl list"></span>
+  </div>
+  <div class="description">
+    Show the names of all of the switches on the FortiGate.
+  </div>
+  <pre class="sample-output">
+# diagnose netlink brctl list
+Switches:
+switch0
+switch1
+Total switches: 2
+  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">diagnose netlink brctl name host &lt;switch-name&gt;</span>
+    <button class="copy-btn" onclick="copyCommand('diagnose netlink brctl name host <switch-name>', this)">Copy</button>
+    <span class="copied-msg" id="copied-diagnose netlink brctl name host &lt;switch-name&gt;"></span>
+  </div>
+  <div class="description">
+    Show the switching table of the specified switch.
+  </div>
+  <pre class="sample-output">
+# diagnose netlink brctl name host switch0
+MAC Address         Port
+00:0c:29:ab:cd:ef   port1
+00:0c:29:12:34:56   port2
+00:0c:29:65:43:21   port3
+  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">get sys interface physical</span>
+    <button class="copy-btn" onclick="copyCommand('get sys interface physical', this)">Copy</button>
+    <span class="copied-msg" id="copied-get sys interface physical"></span>
+  </div>
+  <div class="description">
+    Show all physical interfaces and their status.
+  </div>
+  <pre class="sample-output">
+# get sys interface physical
+name: port1
+  status: up
+  ip: 192.168.1.99/24
+name: port2
+  status: down
+  ip: 0.0.0.0/0
+name: port3
+  status: up
+  ip: 10.0.0.2/24
+  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">diagnose ip address list</span>
+    <button class="copy-btn" onclick="copyCommand('diagnose ip address list', this)">Copy</button>
+    <span class="copied-msg" id="copied-diagnose ip address list"></span>
+  </div>
+  <div class="description">
+    Show IP address information.
+  </div>
+  <pre class="sample-output">
+# diagnose ip address list
+port1: 192.168.1.99/24
+port2: 0.0.0.0/0
+port3: 10.0.0.2/24
+  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">diagnose hardware deviceinfo nic &lt;interface&gt;</span>
+    <button class="copy-btn" onclick="copyCommand('diagnose hardware deviceinfo nic <interface>', this)">Copy</button>
+    <span class="copied-msg" id="copied-diagnose hardware deviceinfo nic &lt;interface&gt;"></span>
+  </div>
+  <div class="description">
+    Show detailed interface information.
+  </div>
+  <pre class="sample-output">
+# diagnose hardware deviceinfo nic port1
+Interface: port1
+MAC Address: 00:0c:29:ab:cd:ef
+Speed: 1000Mbps
+Duplex: full
+Status: up
+  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">get hardware nic &lt;interface&gt;</span>
+    <button class="copy-btn" onclick="copyCommand('get hardware nic <interface>', this)">Copy</button>
+    <span class="copied-msg" id="copied-get hardware nic &lt;interface&gt;"></span>
+  </div>
+  <div class="description">
+    Show hardware information for the specified network interface.
+  </div>
+  <pre class="sample-output">
+# get hardware nic port1
+Interface: port1
+MAC Address: 00:0c:29:ab:cd:ef
+Type: Ethernet
+Status: up
+Speed: 1000Mbps
+  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">get sys interface transceiver</span>
+    <button class="copy-btn" onclick="copyCommand('get sys interface transceiver', this)">Copy</button>
+    <span class="copied-msg" id="copied-get sys interface transceiver"></span>
+  </div>
+  <div class="description">
+    Show connected transceivers.
+  </div>
+  <pre class="sample-output">
+# get sys interface transceiver
+port1: SFP-1G-SX, Vendor: Fortinet, Serial: FT12345678
+port2: No transceiver detected
+port3: SFP-1G-LX, Vendor: Cisco, Serial: CS98765432
+  </pre>
+</div>
+
+      </div>
+    </div>
+
+    <!-- 6. Packet sniffer -->
+    <div class="section-block" id="section-6">
+      <div class="section-header"><span class="arrow">►</span>6. Packet sniffer</div>
+      <div class="section-content">
+        <div class="command-block">
+          <div class="command-row">
+            <span class="command">diagnose sniffer packet port1 'host 8.8.8.8' 4 10 a</span>
+            <button class="copy-btn" onclick="copyCommand('diagnose sniffer packet port1 \'host 8.8.8.8\' 4 10 a', this)">Copy</button>
+            <span class="copied-msg" id="copied-diagnose sniffer packet port1 'host 8.8.8.8' 4 10 a"></span>
+          </div>
+          <div class="description">Execute the inbuilt packet sniffer, filtered on a particular interface with the specified filter.</div>
+          <pre class="sample-output">
+interfaces=[port1]
+1.123456 192.168.1.10.54321 -> 8.8.8.8.53: udp 50
+1.123457 8.8.8.8.53 -> 192.168.1.10.54321: udp 70
+          </pre>
+        </div>
+      </div>
+    </div>
+
+
+<!-- 7. Debug flow -->
+    <div class="section-block" id="section-8">
+      <div class="section-header"><span class="arrow">►</span>7. Debug flow</div>
+      <div class="section-content">
+       
+
+
+<div class="command-block">
+          <div class="command-row">
+            <span class="command">diagnose debug flow filter clear</span>
+            <button class="copy-btn" onclick="copyCommand('diagnose debug flow filter clear', this)">Copy</button>
+            <span class="copied-msg" id="copied-diagnose debug flow filter clear"></span>
+          </div>
+          <div class="description">Clear any IPv4 debug flow filters.</div>
+          <pre class="sample-output">
+Flow filter cleared.
+          </pre>
+        </div>
+
+
+        <div class="command-block">
+          <div class="command-row">
+            <span class="command">diagnose debug flow filter6 clear</span>
+            <button class="copy-btn" onclick="copyCommand('diagnose debug flow filter6 clear', this)">Copy</button>
+            <span class="copied-msg" id="copied-diagnose debug flow filter6 clear"></span>
+          </div>
+          <div class="description">Clear any IPv6 debug flow filters.</div>
+          <pre class="sample-output">
+IPv6 flow filter cleared.
+          </pre>
+        </div>
+        <div class="command-block">
+          <div class="command-row">
+            <span class="command">diagnose debug flow filter &lt;filter&gt;</span>
+            <button class="copy-btn" onclick="copyCommand('diagnose debug flow filter <filter>', this)">Copy</button>
+            <span class="copied-msg" id="copied-diagnose debug flow filter <filter>"></span>
+          </div>
+          <div class="description">Set a filter for running IPv4 traffic debug flows.</div>
+          <pre class="sample-output">
+Flow filter set: src 192.168.1.10 dst 8.8.8.8
+          </pre>
+        </div>
+        <div class="command-block">
+          <div class="command-row">
+            <span class="command">diagnose debug flow filter6 &lt;filter&gt;</span>
+            <button class="copy-btn" onclick="copyCommand('diagnose debug flow filter6 <filter>', this)">Copy</button>
+            <span class="copied-msg" id="copied-diagnose debug flow filter6 <filter>"></span>
+          </div>
+          <div class="description">Set a filter for running IPv6 traffic debug flows.</div>
+          <pre class="sample-output">
+IPv6 flow filter set: src 2001:db8::1 dst 2001:db8::2
+          </pre>
+        </div>
+        <div class="command-block">
+          <div class="command-row">
+            <span class="command">diagnose debug flow show function-name enable</span>
+            <button class="copy-btn" onclick="copyCommand('diagnose debug flow show function-name enable', this)">Copy</button>
+            <span class="copied-msg" id="copied-diagnose debug flow show function-name enable"></span>
+          </div>
+          <div class="description">Show the function name of the code that the traffic accesses.</div>
+          <pre class="sample-output">
+Function name display enabled.
+          </pre>
+        </div>
+        <div class="command-block">
+          <div class="command-row">
+            <span class="command">diagnose debug flow show iprope enable</span>
+            <button class="copy-btn" onclick="copyCommand('diagnose debug flow show iprope enable', this)">Copy</button>
+            <span class="copied-msg" id="copied-diagnose debug flow show iprope enable"></span>
+          </div>
+          <div class="description">Show which internal firewall policy that the traffic is going through.</div>
+          <pre class="sample-output">
+Iprope display enabled.
+          </pre>
+        </div>
+        <div class="command-block">
+          <div class="command-row">
+            <span class="command">diagnose debug console timestamp enable</span>
+            <button class="copy-btn" onclick="copyCommand('diagnose debug console timestamp enable', this)">Copy</button>
+            <span class="copied-msg" id="copied-diagnose debug console timestamp enable"></span>
+          </div>
+          <div class="description">Start printing timestamps on debugs.</div>
+          <pre class="sample-output">
+Timestamp enabled on debug output.
+          </pre>
+        </div>
+        <div class="command-block">
+          <div class="command-row">
+            <span class="command">diagnose debug flow trace start &lt;n&gt;</span>
+            <button class="copy-btn" onclick="copyCommand('diagnose debug flow trace start <n>', this)">Copy</button>
+            <span class="copied-msg" id="copied-diagnose debug flow trace start <n>"></span>
+          </div>
+          <div class="description">Show n lines of IPv4 debugs.</div>
+          <pre class="sample-output">
+id=20085 trace_id=1 func=init_flow line=3752 msg="initialize session"
+id=20085 trace_id=1 func=ip_session_run line=4387 msg="session is allowed"
+          </pre>
+        </div>
+        <div class="command-block">
+          <div class="command-row">
+            <span class="command">diagnose debug flow trace start6 &lt;n&gt;</span>
+            <button class="copy-btn" onclick="copyCommand('diagnose debug flow trace start6 <n>', this)">Copy</button>
+            <span class="copied-msg" id="copied-diagnose debug flow trace start6 <n>"></span>
+          </div>
+          <div class="description">Show n lines of IPv6 debugs.</div>
+          <pre class="sample-output">
+id=30001 trace_id=1 func=init_flow line=3752 msg="initialize session"
+id=30001 trace_id=1 func=ip6_session_run line=4387 msg="session is allowed"
+          </pre>
+        </div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">diagnose debug reset</span>
+    <button class="copy-btn" onclick="copyCommand('diagnose debug reset', this)">Copy</button>
+    <span class="copied-msg" id="copied-diagnose debug reset"></span>
+  </div>
+  <div class="description">
+    Stop all the prior debugs that were enabled and running in the foreground or background.
+  </div>
+  <pre class="sample-output">
+All debug settings have been reset.
+No debug processes are currently active.
+  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">diagnose debug enable</span>
+    <button class="copy-btn" onclick="copyCommand('diagnose debug enable', this)">Copy</button>
+    <span class="copied-msg" id="copied-diagnose debug enable"></span>
+  </div>
+  <div class="description">
+    Start printing debugs in the console.
+  </div>
+  <pre class="sample-output">
+Debug output enabled. All subsequent debug messages will be shown in the console.
+  </pre>
+</div>
+      </div>
+    </div>
+
+    <!-- 8. Routing -->
+    <div class="section-block" id="section-7">
+      <div class="section-header"><span class="arrow">►</span>8. Routing</div>
+      <div class="section-content">
+        <div class="command-block">
+          <div class="command-row">
+            <span class="command">get router info routing-table all</span>
+            <button class="copy-btn" onclick="copyCommand('get router info routing-table all', this)">Copy</button>
+            <span class="copied-msg" id="copied-get router info routing-table all"></span>
+          </div>
+          <div class="description">Show routing table.</div>
+          <pre class="sample-output">
+Routing table for VRF=0
+S*    0.0.0.0/0 [10/0] via 192.168.1.1, port1
+C     10.10.10.0/24 is directly connected, port2
+C     192.168.1.0/24 is directly connected, port1
+          </pre>
+        </div>
+        <div class="command-block">
+          <div class="command-row">
+            <span class="command">get router info routing-table database</span>
+            <button class="copy-btn" onclick="copyCommand('get router info routing-table database', this)">Copy</button>
+            <span class="copied-msg" id="copied-get router info routing-table database"></span>
+          </div>
+          <div class="description">Show IPv4 and IPv6 routing database information.</div>
+          <pre class="sample-output">
+Codes: K - kernel, C - connected, S - static, R - RIP, O - OSPF, B - BGP
+C    192.168.1.0/24 is directly connected, port1
+S    0.0.0.0/0 [1/0] via 192.168.1.1, port1
+          </pre>
+        </div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">get router info6 routing-table database</span>
+    <button class="copy-btn" onclick="copyCommand('get router info6 routing-table database', this)">Copy</button>
+    <span class="copied-msg" id="copied-get router info6 routing-table database"></span>
+  </div>
+  <div class="description">
+    Show the IPv6 routing database, including both active and inactive routes.
+  </div>
+  <pre class="sample-output">
+# get router info6 routing-table database
+*> 2001:db8:1::/64 [10/0] via fe80::1, port1, 00:01:23:45:67:89
+   2001:db8:2::/64 [20/0] via fe80::2, port2, 00:01:23:45:67:8a
+*> ::/0 [5/0] via fe80::1, port1, 00:01:23:45:67:89
+  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">diagnose ip route list</span>
+    <button class="copy-btn" onclick="copyCommand('diagnose ip route list', this)">Copy</button>
+    <span class="copied-msg" id="copied-diagnose ip route list"></span>
+  </div>
+  <div class="description">
+    Show the IPv4 and IPv6 kernel routing table.
+  </div>
+  <pre class="sample-output">
+# diagnose ip route list
+Routing table for VRF=0
+S* 0.0.0.0/0 [10/0] via 192.168.20.1, port1
+C  192.168.20.0/24 is directly connected, port1
+C  10.10.10.0/24 is directly connected, port2
+S  172.16.0.0/16 [20/0] via 192.168.20.2, port1
+
+IPv6 Routing table:
+C  2001:db8:1::/64 is directly connected, port1
+S  2001:db8:2::/64 [20/0] via fe80::2, port2
+  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">get router info kernel</span>
+    <button class="copy-btn" onclick="copyCommand('get router info kernel', this)">Copy</button>
+    <span class="copied-msg" id="copied-get router info kernel"></span>
+  </div>
+  <div class="description">
+    Show kernel routing information for IPv4.
+  </div>
+  <pre class="sample-output">
+# get router info kernel
+Kernel routing table:
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+0.0.0.0         192.168.20.1    0.0.0.0         UG    10     0        0 port1
+192.168.20.0    0.0.0.0         255.255.255.0   U     0      0        0 port1
+10.10.10.0      0.0.0.0         255.255.255.0   U     0      0        0 port2
+  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">diagnose ipv6 route list</span>
+    <button class="copy-btn" onclick="copyCommand('diagnose ipv6 route list', this)">Copy</button>
+    <span class="copied-msg" id="copied-diagnose ipv6 route list"></span>
+  </div>
+  <div class="description">
+    Show the IPv6 kernel routing table.
+  </div>
+  <pre class="sample-output">
+# diagnose ipv6 route list
+IPv6 Routing table:
+C  2001:db8:1::/64 is directly connected, port1
+S  2001:db8:2::/64 [20/0] via fe80::2, port2
+C  fe80::/64 is directly connected, port1
+  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">get router info6 kernel</span>
+    <button class="copy-btn" onclick="copyCommand('get router info6 kernel', this)">Copy</button>
+    <span class="copied-msg" id="copied-get router info6 kernel"></span>
+  </div>
+  <div class="description">
+    Show kernel routing information for IPv6.
+  </div>
+  <pre class="sample-output">
+# get router info6 kernel
+Kernel IPv6 routing table:
+Destination                    Next Hop                   Flags  Iface
+2001:db8:1::/64                ::                         U      port1
+2001:db8:2::/64                fe80::2                    UG     port2
+::/0                           fe80::1                    UG     port1
+  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">get router info protocols</span>
+    <button class="copy-btn" onclick="copyCommand('get router info protocols', this)">Copy</button>
+    <span class="copied-msg" id="copied-get router info protocols"></span>
+  </div>
+  <div class="description">
+    Show routing protocol information for IPv4 and IPv6.
+  </div>
+  <pre class="sample-output">
+# get router info protocols
+OSPF: Enabled, Area 0.0.0.0, Router ID 1.1.1.1
+BGP:  Enabled, AS 65001, Peers: 2
+RIP:  Disabled
+Static: 3 routes
+  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">get router info6 protocols</span>
+    <button class="copy-btn" onclick="copyCommand('get router info6 protocols', this)">Copy</button>
+    <span class="copied-msg" id="copied-get router info6 protocols"></span>
+  </div>
+  <div class="description">
+    Show routing protocol information for IPv6.
+  </div>
+  <pre class="sample-output">
+# get router info6 protocols
+OSPFv3: Enabled, Area 0.0.0.0, Router ID 1.1.1.1
+BGP:    Enabled, AS 65001, Peers: 1
+RIPng:  Disabled
+Static: 2 routes
+  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">execute router restart</span>
+    <button class="copy-btn" onclick="copyCommand('execute router restart', this)">Copy</button>
+    <span class="copied-msg" id="copied-execute router restart"></span>
+  </div>
+  <div class="description">
+    Restart the routing daemon.
+  </div>
+  <pre class="sample-output">
+# execute router restart
+Restarting routing daemon...
+Routing daemon restarted successfully.
+  </pre>
+</div>
+
+      </div>
+    </div>
+
+    
+
+    <!-- 9. Authentication -->
+    <div class="section-block" id="section-9">
+      <div class="section-header"><span class="arrow">►</span>9. Authentication</div>
+      <div class="section-content">
+        <div class="command-block">
+          <div class="command-row">
+            <span class="command">diagnose firewall auth filter &lt;filter&gt;</span>
+            <button class="copy-btn" onclick="copyCommand('diagnose firewall auth filter <filter>', this)">Copy</button>
+            <span class="copied-msg" id="copied-diagnose firewall auth filter <filter>"></span>
+          </div>
+          <div class="description">Set the filter for authentication debugging.</div>
+          <pre class="sample-output">
+Authentication debug filter set: user testuser
+          </pre>
+        </div>
+        <div class="command-block">
+          <div class="command-row">
+            <span class="command">diagnose debug application fnbamd -1</span>
+            <button class="copy-btn" onclick="copyCommand('diagnose debug application fnbamd -1', this)">Copy</button>
+            <span class="copied-msg" id="copied-diagnose debug application fnbamd -1"></span>
+          </div>
+          <div class="description">Enable authentication debugging for the fnbamd process.</div>
+          <pre class="sample-output">
+Debugging enabled for application fnbamd.
+          </pre>
+        </div>
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">diagnose firewall auth list</span>
+    <button class="copy-btn" onclick="copyCommand('diagnose firewall auth list', this)">Copy</button>
+    <span class="copied-msg" id="copied-diagnose firewall auth list"></span>
+  </div>
+  <div class="description">
+    List filtered, authenticated IPv4 users.
+  </div>
+  <pre class="sample-output">
+# diagnose firewall auth list
+User: alice, IP: 192.168.1.10, Login Time: 2025-07-04 08:15:00, Source: LDAP
+User: bob, IP: 192.168.1.11, Login Time: 2025-07-04 09:00:00, Source: RADIUS
+  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">diagnose wad user list</span>
+    <button class="copy-btn" onclick="copyCommand('diagnose wad user list', this)">Copy</button>
+    <span class="copied-msg" id="copied-diagnose wad user list"></span>
+  </div>
+  <div class="description">
+    List current users authenticated by proxy (wad daemon).
+  </div>
+  <pre class="sample-output">
+# diagnose wad user list
+User: charlie, IP: 10.0.0.5, Authenticated via Proxy, Session ID: 12345
+User: diana, IP: 10.0.0.6, Authenticated via Proxy, Session ID: 12346
+  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">diagnose debug application authd -1 <--- Execute this first </span>
+    <button class="copy-btn" onclick="copyCommand('diagnose debug application authd -1', this)">Copy</button>
+    <span class="copied-msg" id="copied-diagnose debug application authd -1"></span>
+  </div>
+  <div class="description">
+  </div>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">diagnose debug enable <--- Now execute this </span>
+    <button class="copy-btn" onclick="copyCommand('diagnose debug enable', this)">Copy</button>
+    <span class="copied-msg" id="copied-diagnose debug enable"></span>
+  </div>
+  <div class="description">
+   1. First Command: Sets the debug level for authd to maximum verbosity, but does not immediately display output.<br>
+   2. Second Command: Enables debug output globally, causing the system to begin displaying detailed authentication debug logs in your session.
+  </div>
+  <pre class="sample-output">
+[AuthD][2025-07-07 18:03:21] Authentication daemon started.
+[AuthD][2025-07-07 18:03:22] Received login request: user=alice, source_ip=10.0.1.23
+[AuthD][2025-07-07 18:03:22] Checking user credentials...
+[AuthD][2025-07-07 18:03:22] User 'alice' found in local database.
+[AuthD][2025-07-07 18:03:22] Password verification succeeded.
+[AuthD][2025-07-07 18:03:23] Authentication successful for user 'alice'.
+[AuthD][2025-07-07 18:03:24] Session created: session_id=0x7f9ab23
+[AuthD][2025-07-07 18:03:30] Received logout request: user=alice
+[AuthD][2025-07-07 18:03:30] Session terminated: session_id=0x7f9ab23
+  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">diagnose test authserver &lt;auth_protocol&gt; &lt;server_name&gt; &lt;user&gt; &lt;password&gt;</span>
+    <button class="copy-btn" onclick="copyCommand('diagnose test authserver <auth_protocol> <server_name> <user> <password>', this)">Copy</button>
+    <span class="copied-msg" id="copied-diagnose test authserver &lt;auth_protocol&gt; &lt;server_name&gt; &lt;user&gt; &lt;password&gt;"></span>
+  </div>
+  <div class="description">
+    Test authentication directly from the CLI.  
+    <strong>Caution:</strong> The password is visible in clear text; be careful when capturing this command to a log file.
+  </div>
+  <pre class="sample-output">
+# diagnose test authserver ldap ldap-server01 alice MyPassword123
+Authentication test successful for user alice on server ldap-server01.
+  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">diagnose test authserver ldap &lt;server_name&gt; &lt;user&gt; &lt;password&gt;</span>
+    <button class="copy-btn" onclick="copyCommand('diagnose test authserver ldap <server_name> <user> <password>', this)">Copy</button>
+    <span class="copied-msg" id="copied-diagnose test authserver ldap &lt;server_name&gt; &lt;user&gt; &lt;password&gt;"></span>
+  </div>
+  <div class="description">
+    Test user authentication using an LDAP server.  
+    <strong>Caution:</strong> The password is visible in clear text; be careful when capturing this command to a log file.
+  </div>
+  <pre class="sample-output">
+# diagnose test authserver ldap ldap-server01 alice MyPassword123
+LDAP authentication successful for user alice.
+  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">diagnose test authserver radius &lt;server_name&gt; &lt;auth_type&gt; &lt;user&gt; &lt;password&gt;</span>
+    <button class="copy-btn" onclick="copyCommand('diagnose test authserver radius <server_name> <auth_type> <user> <password>', this)">Copy</button>
+    <span class="copied-msg" id="copied-diagnose test authserver radius &lt;server_name&gt; &lt;auth_type&gt; &lt;user&gt; &lt;password&gt;"></span>
+  </div>
+  <div class="description">
+    Test user authentication using a Radius server.  
+    <strong>Caution:</strong> The password is visible in clear text; be careful when capturing this command to a log file.
+  </div>
+  <pre class="sample-output">
+# diagnose test authserver radius radius-server01 pap alice MyPassword123
+RADIUS authentication successful for user alice.
+  </pre>
+</div>
+
+      </div>
+    </div>
+
+ <!-- 11. VPN - IPsec-->
+    <div class="section-block" id="section-10">
+      <div class="section-header"><span class="arrow">►</span>10. VPN - IPsec</div>
+      <div class="section-content">
+        <div class="command-block">
+          <div class="command-row">
+    <span class="command">diagnose vpn ike gateway list</span>
+    <button class="copy-btn" onclick="copyCommand('diagnose vpn ike gateway list', this)">Copy</button>
+    <span class="copied-msg" id="copied-diagnose vpn ike gateway list"></span>
+  </div>
+  <div class="description">
+    Show IPsec phase 1 (IKE) gateway information.
+  </div>
+  <pre class="sample-output">
+# diagnose vpn ike gateway list
+vd: root/0
+name: VPN_TO_BRANCH
+version: 1
+interface: port1 192.168.1.99:500
+  remote: 203.0.113.5:500
+  status: up
+  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">diagnose vpn tunnel list</span>
+    <button class="copy-btn" onclick="copyCommand('diagnose vpn tunnel list', this)">Copy</button>
+    <span class="copied-msg" id="copied-diagnose vpn tunnel list"></span>
+  </div>
+  <div class="description">
+    Show IPsec phase 2 tunnel information.
+  </div>
+  <pre class="sample-output">
+# diagnose vpn tunnel list
+name=VPN_TO_BRANCH ver=1 serial=1 203.0.113.5:0->192.168.1.99:0
+bound_if=3 lgwy=static/1 tun=intf/0 mode=auto/1 encap=none/0
+proxyid_num=1 child_num=0 refcnt=9 ilast=5 olast=5
+stat: rxp=12345 txp=54321 rxb=1234567 txb=7654321
+  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">get vpn ipsec tunnel summary</span>
+    <button class="copy-btn" onclick="copyCommand('get vpn ipsec tunnel summary', this)">Copy</button>
+    <span class="copied-msg" id="copied-get vpn ipsec tunnel summary"></span>
+  </div>
+  <div class="description">
+    Show summary and detailed information about IPsec tunnels.
+  </div>
+  <pre class="sample-output">
+# get vpn ipsec tunnel summary
+name                 intf    status  rx_bytes    tx_bytes
+VPN_TO_BRANCH        port1   up      1234567     7654321
+  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">diagnose vpn ipsec status</span>
+    <button class="copy-btn" onclick="copyCommand('diagnose vpn ipsec status', this)">Copy</button>
+    <span class="copied-msg" id="copied-diagnose vpn ipsec status"></span>
+  </div>
+  <div class="description">
+    Show information about encryption counters.
+  </div>
+  <pre class="sample-output">
+# diagnose vpn ipsec status
+IPsec status:
+  tunnels: 1
+  interfaces: 1
+  selectors: 1
+  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">diagnose vpn ike log filter &lt;filter&gt;</span>
+    <button class="copy-btn" onclick="copyCommand('diagnose vpn ike log filter <filter>', this)">Copy</button>
+    <span class="copied-msg" id="copied-diagnose vpn ike log filter &lt;filter&gt;"></span>
+  </div>
+  <div class="description">
+    Set a filter for IKE daemon debugs.
+  </div>
+  <pre class="sample-output">
+# diagnose vpn ike log filter dst 203.0.113.5
+IKE log filter set: destination 203.0.113.5
+  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">diagnose debug application ike -1 <--- Execute this first </span>
+    <button class="copy-btn" onclick="copyCommand('diagnose debug application ike -1', this)">Copy</button>
+    <span class="copied-msg" id="copied-diagnose debug application ike -1"></span>
+  </div>
+  <div class="description">
+
+  </div>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">diagnose debug enable <--- Now execute this</span>
+    <button class="copy-btn" onclick="copyCommand('diagnose debug enable', this)">Copy</button>
+    <span class="copied-msg" id="copied-diagnose debug enable"></span>
+  </div>
+  <div class="description">
+1. First command: Diagnose debug application [process] -1: Set maximum debug level for a specific process.<br>
+2. Second command: Diagnose debug enable: Start showing the debug output.
+  </div>
+  <pre class="sample-output">
+ike 0: comes 192.168.175.153:500->192.168.175.152:500,ifindex=3, vpn=VPN_TUNNEL
+ike 0: IKEv1 exchange: Main Mode
+ike 0: received Vendor ID payload
+ike 0: received SA payload proposal
+ike 0: selected proposal: encryption=3DES, hash=SHA1, DH group=2
+ike 0: received KE payload
+ike 0: received NONCE payload
+ike 0: received ID payload: type=IPV4_ADDR, value=192.168.175.153
+ike 0: authentication method: pre-shared key
+ike 0: verifying peer ID
+ike 0: peer ID accepted
+ike 0: sending SA payload proposal
+ike 0: sending KE payload
+ike 0: sending NONCE payload
+ike 0: sending ID payload
+ike 0: sending authentication payload
+ike 0: Main Mode exchange completed
+ike 0: Quick Mode initiated
+ike 0: received SA payload proposal
+ike 0: selected proposal: ESP, encryption=AES256, hash=SHA1
+ike 0: received NONCE payload
+ike 0: sending SA payload proposal
+ike 0: sending NONCE payload
+ike 0: Quick Mode exchange completed
+ike 0: IPsec SA established: SPI=0x12345678  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">diagnose vpn ike restart</span>
+    <button class="copy-btn" onclick="copyCommand('diagnose vpn ike restart', this)">Copy</button>
+    <span class="copied-msg" id="copied-diagnose vpn ike restart"></span>
+  </div>
+  <div class="description">
+    Restart the IKE process.
+  </div>
+  <pre class="sample-output">
+# diagnose vpn ike restart
+Restarting IKE process...
+IKE process restarted successfully.
+  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">diagnose vpn ike counts</span>
+    <button class="copy-btn" onclick="copyCommand('diagnose vpn ike counts', this)">Copy</button>
+    <span class="copied-msg" id="copied-diagnose vpn ike counts"></span>
+  </div>
+  <div class="description">
+    Show other information, such as IKE counts, routes, errors, and statistics.
+  </div>
+  <pre class="sample-output">
+# diagnose vpn ike counts
+Total IKE SAs: 1
+Total Child SAs: 1
+Total Errors: 0
+  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">diagnose vpn ike routes</span>
+    <button class="copy-btn" onclick="copyCommand('diagnose vpn ike routes', this)">Copy</button>
+    <span class="copied-msg" id="copied-diagnose vpn ike routes"></span>
+  </div>
+  <div class="description">
+    Show IKE route information.
+  </div>
+  <pre class="sample-output">
+# diagnose vpn ike routes
+Route: 192.168.10.0/24 via VPN_TO_BRANCH
+Status: active
+  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">diagnose vpn ike errors</span>
+    <button class="copy-btn" onclick="copyCommand('diagnose vpn ike errors', this)">Copy</button>
+    <span class="copied-msg" id="copied-diagnose vpn ike errors"></span>
+  </div>
+  <div class="description">
+    Show IKE error logs.
+  </div>
+  <pre class="sample-output">
+# diagnose vpn ike errors
+No IKE errors detected.
+  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">diagnose vpn ike stats</span>
+    <button class="copy-btn" onclick="copyCommand('diagnose vpn ike stats', this)">Copy</button>
+    <span class="copied-msg" id="copied-diagnose vpn ike stats"></span>
+  </div>
+  <div class="description">
+    Show IKE statistics.
+  </div>
+  <pre class="sample-output">
+# diagnose vpn ike stats
+IKEv1 SAs established: 1
+IKEv2 SAs established: 0
+Total negotiations: 5
+  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">diagnose vpn ike status</span>
+    <button class="copy-btn" onclick="copyCommand('diagnose vpn ike status', this)">Copy</button>
+    <span class="copied-msg" id="copied-diagnose vpn ike status"></span>
+  </div>
+  <div class="description">
+    Show IKE status information.
+  </div>
+  <pre class="sample-output">
+# diagnose vpn ike status
+IKE status:
+  VPN_TO_BRANCH: up
+  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">diagnose vpn ike crypto</span>
+    <button class="copy-btn" onclick="copyCommand('diagnose vpn ike crypto', this)">Copy</button>
+    <span class="copied-msg" id="copied-diagnose vpn ike crypto"></span>
+  </div>
+  <div class="description">
+    Show IKE cryptographic information.
+  </div>
+  <pre class="sample-output">
+# diagnose vpn ike crypto
+IKE proposal:
+  Encryption: aes256
+  Authentication: sha1
+  DH Group: 14
+  </pre>
+</div>
+</div>
+</div>
+	
+    <!-- 11. HA (High Availability) -->
+    <div class="section-block" id="section-10">
+      <div class="section-header"><span class="arrow">►</span>11. HA (High Availability)</div>
+      <div class="section-content">
+        <div class="command-block">
+          <div class="command-row">
+            <span class="command">get system ha status</span>
+            <button class="copy-btn" onclick="copyCommand('get system ha status', this)">Copy</button>
+            <span class="copied-msg" id="copied-get system ha status"></span>
+          </div>
+          <div class="description">Show HA status.</div>
+          <pre class="sample-output">
+Model: FortiGate-VM64
+Mode: a-p
+Group: 1
+Debug: 0
+Cluster Uptime: 10 days 2:34:12
+Cluster state change time: 2025-07-03 10:12:45
+Primary selected using:
+  <2025/07/03 10:12:45> FGVM02TM20000001 is selected as the primary because it has the largest value of override priority.
+Primary: FGVM02TM20000001, HA uptime: 10 days 2:34:12
+          </pre>
+        </div>
+        <div class="command-block">
+          <div class="command-row">
+            <span class="command">diagnose sys ha status</span>
+            <button class="copy-btn" onclick="copyCommand('diagnose sys ha status', this)">Copy</button>
+            <span class="copied-msg" id="copied-diagnose sys ha status"></span>
+          </div>
+          <div class="description">Show detailed HA status.</div>
+          <pre class="sample-output">
+HA Health Status: OK
+Cluster Members: 2
+FGVM02TM20000001 (primary)
+FGVM02TM20000002 (secondary)
+          </pre>
+        </div>
+
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">execute ha manage &lt;index&gt; &lt;username&gt;</span>
+    <button class="copy-btn" onclick="copyCommand('execute ha manage <index> <username>', this)">Copy</button>
+    <span class="copied-msg" id="copied-execute ha manage &lt;index&gt; &lt;username&gt;"></span>
+  </div>
+  <div class="description">
+    Log into and manage a specific HA member. Use this command from the CLI of any cluster unit to log into the CLI of another cluster unit. You will be prompted for the username and password of the target unit[1][3][5].
+  </div>
+  <pre class="sample-output">
+# execute ha manage 1 admin
+Please enter password for admin:
+[Connected to HA member 1]
+FGT-HA-1 #
+  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">diagnose sys ha checksum cluster</span>
+    <button class="copy-btn" onclick="copyCommand('diagnose sys ha checksum cluster', this)">Copy</button>
+    <span class="copied-msg" id="copied-diagnose sys ha checksum cluster"></span>
+  </div>
+  <div class="description">
+    Show checksum information of all cluster members.
+  </div>
+  <pre class="sample-output">
+# diagnose sys ha checksum cluster
+Cluster member 0: checksum = 0x1a2b3c4d
+Cluster member 1: checksum = 0x1a2b3c4d
+All members in sync.
+  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">diagnose sys ha checksum show &lt;vdom&gt;</span>
+    <button class="copy-btn" onclick="copyCommand('diagnose sys ha checksum show <vdom>', this)">Copy</button>
+    <span class="copied-msg" id="copied-diagnose sys ha checksum show &lt;vdom&gt;"></span>
+  </div>
+  <div class="description">
+    Show detailed checksum information for a VDOM.
+  </div>
+  <pre class="sample-output">
+# diagnose sys ha checksum show root
+Checksum details for VDOM root:
+Object: firewall policy, Checksum: 0xabc123
+Object: address, Checksum: 0xdef456
+All objects in sync.
+  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">diagnose sys ha checksum recalculate</span>
+    <button class="copy-btn" onclick="copyCommand('diagnose sys ha checksum recalculate', this)">Copy</button>
+    <span class="copied-msg" id="copied-diagnose sys ha checksum recalculate"></span>
+  </div>
+  <div class="description">
+    Recalculate HA checksums.
+  </div>
+  <pre class="sample-output">
+# diagnose sys ha checksum recalculate
+Recalculating HA checksums...
+Checksums recalculated successfully.
+  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">diagnose sys ha recalculate-extfile-signature</span>
+    <button class="copy-btn" onclick="copyCommand('diagnose sys ha recalculate-extfile-signature', this)">Copy</button>
+    <span class="copied-msg" id="copied-diagnose sys ha recalculate-extfile-signature"></span>
+  </div>
+  <div class="description">
+    Recalculate HA external files signatures.
+  </div>
+  <pre class="sample-output">
+# diagnose sys ha recalculate-extfile-signature
+Recalculating external file signatures...
+Operation completed successfully.
+  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">diagnose sys ha reset-uptime</span>
+    <button class="copy-btn" onclick="copyCommand('diagnose sys ha reset-uptime', this)">Copy</button>
+    <span class="copied-msg" id="copied-diagnose sys ha reset-uptime"></span>
+  </div>
+  <div class="description">
+    Reset the HA uptime. This is used to test failover.
+  </div>
+  <pre class="sample-output">
+# diagnose sys ha reset-uptime
+HA uptime reset. Failover criteria will be re-evaluated.
+  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">diagnose debug application hatalk -1 <--- Execute this first</span>
+    <button class="copy-btn" onclick="copyCommand('diagnose debug application hatalk -1', this)">Copy</button>
+    <span class="copied-msg" id="copied-diagnose debug application hatalk -1"></span>
+  </div>
+  <div class="description">
+   
+  </div>
+
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">diagnose debug application hasync -1 <--- Execute this now</span>
+    <button class="copy-btn" onclick="copyCommand('diagnose debug application hasync -1', this)">Copy</button>
+    <span class="copied-msg" id="copied-diagnose debug application hasync -1"></span>
+  </div>
+  <div class="description">
+
+  </div>
+  </div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">diagnose debug application harelay -1 <--- Execute this now</span>
+    <button class="copy-btn" onclick="copyCommand('diagnose debug application harelay -1', this)">Copy</button>
+    <span class="copied-msg" id="copied-diagnose debug application harelay -1"></span>
+  </div>
+  <div class="description">
+
+  </div>
+  </div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">diagnose debug enable <--- Execute this for the output</span>
+    <button class="copy-btn" onclick="copyCommand('diagnose debug enable', this)">Copy</button>
+    <span class="copied-msg" id="copied-diagnose debug enable"></span>
+  </div>
+  <div class="description">
+1. Enables maximum debug for the HA protocol module (heartbeat communications between cluster members).<br>
+2. Enables maximum debug for the HA synchronization module (real-time config/state sync across cluster members). <br>
+3. Enables maximum debug for the HA relay module (relays HA messages). <br>
+4. Starts displaying the debug output for all enabled modules. <br>
+  </div>
+  <pre class="sample-output">
+[hatalk][2025-07-07 18:22:01] Heartbeat sent to member 2 on port3.
+[hatalk][2025-07-07 18:22:01] Heartbeat received from member 2 on port3.
+[hatalk][2025-07-07 18:22:02] Heartbeat sent to member 2 on port3.
+[hatalk][2025-07-07 18:22:02] Heartbeat received from member 2 on port3.
+
+[hasync][2025-07-07 18:22:03] Start config sync to member 2.
+[hasync][2025-07-07 18:22:03] Config sync complete for member 2.
+[hasync][2025-07-07 18:22:04] Detected out-of-sync object: firewall address.
+[hasync][2025-07-07 18:22:04] Resyncing object: firewall address.
+
+[harelay][2025-07-07 18:22:05] Relaying HA message from member 1 to member 2.
+[harelay][2025-07-07 18:22:05] Relay successful for message type: config_update.  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">diagnose sys ha history read</span>
+    <button class="copy-btn" onclick="copyCommand('diagnose sys ha history read', this)">Copy</button>
+    <span class="copied-msg" id="copied-diagnose sys ha history read"></span>
+  </div>
+  <div class="description">
+    Show HA history.
+  </div>
+  <pre class="sample-output">
+# diagnose sys ha history read
+[2025-07-04 10:00:01] HA event: Device 1 became master.
+[2025-07-04 10:15:34] HA event: Configuration synchronized.
+[2025-07-04 11:00:22] HA event: Device 2 joined cluster.
+  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">execute ha synchronize stop</span>
+    <button class="copy-btn" onclick="copyCommand('execute ha synchronize stop', this)">Copy</button>
+    <span class="copied-msg" id="copied-execute ha synchronize stop"></span>
+  </div>
+  <div class="description">
+    Manually stop HA synchronization.
+  </div>
+  <pre class="sample-output">
+# execute ha synchronize stop
+HA synchronization stopped.
+  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">execute ha synchronize start</span>
+    <button class="copy-btn" onclick="copyCommand('execute ha synchronize start', this)">Copy</button>
+    <span class="copied-msg" id="copied-execute ha synchronize start"></span>
+  </div>
+  <div class="description">
+    Manually start HA synchronization.
+  </div>
+  <pre class="sample-output">
+# execute ha synchronize start
+HA synchronization started.
+  </pre>
+</div>
+
+      </div>
+    </div>
+
+    <!-- 12. Logs and Logging -->
+    <div class="section-block" id="section-11">
+      <div class="section-header"><span class="arrow">►</span>12. Logs and Logging</div>
+      <div class="section-content">
+        <div class="command-block">
+          <div class="command-row">
+
+            <span class="command">execute log display</span>
+            <button class="copy-btn" onclick="copyCommand('execute log display', this)">Copy</button>
+            <span class="copied-msg" id="copied-execute log display"></span>
+          </div>
+          <div class="description">Show log entries.</div>
+          <pre class="sample-output">
+date=2025-07-03 time=16:50:01 logid="0000000013" type="traffic" subtype="forward" action="accept" srcip=192.168.1.10 dstip=8.8.8.8 srcport=54321 dstport=53
+          </pre>
+        </div>
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">diagnose log test</span>
+    <button class="copy-btn" onclick="copyCommand('diagnose log test', this)">Copy</button>
+    <span class="copied-msg" id="copied-diagnose log test"></span>
+  </div>
+  <div class="description">
+    Generate logs for testing.
+  </div>
+  <pre class="sample-output">
+# diagnose log test
+Test log generated successfully.
+Log ID: 100001, Type: Event, Message: "Test log entry"
+  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">execute log filter &lt;filter&gt;</span>
+    <button class="copy-btn" onclick="copyCommand('execute log filter <filter>', this)">Copy</button>
+    <span class="copied-msg" id="copied-execute log filter &lt;filter&gt;"></span>
+  </div>
+  <div class="description">
+    Set log filters.
+  </div>
+  <pre class="sample-output">
+# execute log filter severity warning
+Log filter set: severity = warning
+  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">execute log filter</span>
+    <button class="copy-btn" onclick="copyCommand('execute log filter', this)">Copy</button>
+    <span class="copied-msg" id="copied-execute log filter"></span>
+  </div>
+  <div class="description">
+    Show log filters.
+  </div>
+  <pre class="sample-output">
+# execute log filter
+Current log filter settings:
+Severity: warning
+Source: any
+Destination: any
+Type: event
+  </pre>
+</div>
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">execute log delete</span>
+    <button class="copy-btn" onclick="copyCommand('execute log delete', this)">Copy</button>
+    <span class="copied-msg" id="copied-execute log delete"></span>
+  </div>
+  <div class="description">
+    Delete filtered logs from memory or local disk, based on the currently set log filters. You can use log filters to target specific log devices (memory, disk, FortiAnalyzer, etc.) and categories (traffic, event, UTM, etc.).<br>
+    <strong>Note:</strong> This operation is per-VDOM where applicable and cannot delete individual log entries—only entire filtered categories or devices.<br>
+    <em>Example: To delete all event logs from memory:</em><br>
+    <code>execute log filter device 0</code><br>
+    <code>execute log filter category 1</code><br>
+    <code>execute log delete</code>
+  </div>
+  <pre class="sample-output">
+# execute log delete
+This will delete all filtered logs.
+Do you want to continue? (y/n) y
+Logs deleted successfully.
+  </pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">diagnose debug application miglogd -1 <--- Execute this first</span>
+    <button class="copy-btn" onclick="copyCommand('diagnose debug application miglogd -1', this)">Copy</button>
+    <span class="copied-msg" id="copied-diagnose debug application miglogd -1"></span>
+  </div>
+  <div class="description">
+     </div>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">diagnose debug enable <--- Execute this now</span>
+    <button class="copy-btn" onclick="copyCommand('diagnose debug enable', this)">Copy</button>
+    <span class="copied-msg" id="copied-diagnose debug enable"></span>
+  </div>
+  <div class="description">
+    1. First command: Enables the most detailed debug logging for the miglogd daemon, which is responsible for logging on FortiGate devices. <br>
+    2. Second command: Starts displaying the debug output for all enabled modules.
+  </div>
+  <pre class="sample-output">
+<miglogd> 2025-07-07 18:35:10: [INFO] miglogd started, pid=1234
+<miglogd> 2025-07-07 18:35:11: [DEBUG] Received log event: type=utm, severity=warning, msg="Blocked virus detected"
+<miglogd> 2025-07-07 18:35:11: [DEBUG] Forwarding log to FortiAnalyzer at 172.18.64.234:514
+<miglogd> 2025-07-07 18:35:12: [DEBUG] Log successfully sent to remote device
+<miglogd> 2025-07-07 18:35:13: [DEBUG] Received log event: type=ips, severity=critical, msg="Intrusion detected"
+<miglogd> 2025-07-07 18:35:13: [DEBUG] Forwarding log to local disk
+<miglogd> 2025-07-07 18:35:14: [ERROR] Failed to send log to FortiAnalyzer, retrying...
+<miglogd> 2025-07-07 18:35:15: [DEBUG] Retrying log send, attempt 2
+<miglogd> 2025-07-07 18:35:16: [INFO] Log send successful on retry
+</pre>
+</div>
+
+<div class="command-block">
+  <div class="command-row">
+    <span class="command">execute log fortianalyzer test-connectivity</span>
+    <button class="copy-btn" onclick="copyCommand('execute log fortianalyzer test-connectivity', this)">Copy</button>
+    <span class="copied-msg" id="copied-execute log fortianalyzer test-connectivity"></span>
+  </div>
+  <div class="description">
+    Test the connectivity between the FortiGate and a configured FortiAnalyzer device to ensure logs can be sent and received successfully.
+  </div>
+  <pre class="sample-output">
+# execute log fortianalyzer test-connectivity
+Testing connectivity to FortiAnalyzer...
+Connection successful. Log transmission verified.
+  </pre>
+</div>
+
+      </div>
+    </div>
+
+
+
+  </section>
+  <script>
+    // Collapse all sections by default and set arrow
+    document.querySelectorAll('.section-content').forEach(content => {
+      content.style.display = 'none';
+    });
+    document.querySelectorAll('.section-header').forEach(header => {
+      header.classList.remove('expanded');
+      header.querySelector('.arrow').textContent = "►";
+    });
+
+    // Section collapse/expand
+    document.querySelectorAll('.section-header').forEach(header => {
+      header.onclick = function() {
+        const content = this.nextElementSibling;
+        const isOpen = content.style.display === "block";
+        content.style.display = isOpen ? "none" : "block";
+        this.classList.toggle('expanded', !isOpen);
+        this.querySelector('.arrow').textContent = !isOpen ? "▼" : "►";
+      };
+    });
+
+    // Quick jump menu
+    const quickJumpMenu = document.getElementById('quickJumpMenu');
+    document.querySelectorAll('.section-block').forEach((section, i) => {
+      const title = section.querySelector('.section-header').textContent.replace(/▼|►/g, '').trim();
+      const opt = document.createElement('option');
+      opt.value = section.id;
+      opt.textContent = title;
+      quickJumpMenu.appendChild(opt);
+    });
+    quickJumpMenu.onchange = function() {
+      // Collapse all sections
+      document.querySelectorAll('.section-content').forEach(content => content.style.display = 'none');
+      document.querySelectorAll('.section-header').forEach(header => {
+        header.classList.remove('expanded');
+        header.querySelector('.arrow').textContent = "►";
+      });
+      // Expand selected section
+      const section = document.getElementById(this.value);
+      const header = section.querySelector('.section-header');
+      const content = section.querySelector('.section-content');
+      content.style.display = "block";
+      header.classList.add('expanded');
+      header.querySelector('.arrow').textContent = "▼";
+      section.scrollIntoView({behavior: "smooth", block: "start"});
+    };
+
+    // Copy command to clipboard
+    function copyCommand(cmd, btn) {
+      navigator.clipboard.writeText(cmd);
+      const msgSpan = btn.nextElementSibling;
+      msgSpan.textContent = "Copied!";
+      setTimeout(() => { msgSpan.textContent = ""; }, 1500);
+    }
+
+    // Dark/light mode
+    const toggleBtn = document.getElementById('toggleThemeBtn');
+    toggleBtn.onclick = () => {
+      document.body.classList.toggle('dark');
+      toggleBtn.textContent = document.body.classList.contains('dark') ? '☀️ Light Mode' : '🌙 Dark Mode';
+    };
+
+    // Search filter
+    document.getElementById('searchInput').oninput = function() {
+      const val = this.value.trim().toLowerCase();
+      document.querySelectorAll('.section-block').forEach(section => {
+        let sectionHasMatch = false;
+        section.querySelectorAll('.command-block').forEach(block => {
+          const txt = block.textContent.toLowerCase();
+          const match = txt.includes(val);
+          block.style.display = match ? "block" : "none";
+          if (match) sectionHasMatch = true;
+        });
+        // Expand/collapse section based on match
+        const header = section.querySelector('.section-header');
+        const content = section.querySelector('.section-content');
+        if (sectionHasMatch) {
+          content.style.display = "block";
+          header.classList.add('expanded');
+          header.querySelector('.arrow').textContent = "▼";
+        } else {
+          content.style.display = "none";
+          header.classList.remove('expanded');
+          header.querySelector('.arrow').textContent = "►";
+        }
+      });
+    };
+  </script>
+</body>
+</html>
